@@ -93,4 +93,9 @@ public class ArticleController {
             articleRepository.save(article);
             return "redirect:/index";
         }
+
+        @PatchMapping ("/update")
+    public String article(){
+        return "redirect:/index";
+        }
 }
