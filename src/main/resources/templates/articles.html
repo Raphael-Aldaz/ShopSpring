@@ -18,7 +18,7 @@
 <body>
     <div layout:fragment="content">
         <div th:each="c:${listCategories}" class="btn-group">
-            <a href="#" class="btn btn-primary" th:text="${c.catName}" aria-current="page">Active link</a>
+            <a th:href="@{/index(idCat = ${c.id})}" class="btn btn-primary" th:text="${c.catName}" aria-current="page">Active link</a>
         </div>
     <div class="container">
         <table class="table mt-4">
@@ -51,7 +51,7 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${currentPage == status.index ? 'active' : ''}" th:each="page, status:${pages}">
-                    <a class="page-link" th:href="@{/index(page=${status.index}, kw=${param.kw})}" th:text="${status.index}"></a>
+                    <a class="page-link" th:href="@{/index(page=${status.index}, kw=${param.kw}, idCat=${param.idCat})}" th:text="${status.index}"></a>
                 </li>
             </ul>
         </nav>

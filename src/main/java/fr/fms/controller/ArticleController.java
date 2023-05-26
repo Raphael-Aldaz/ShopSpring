@@ -31,7 +31,8 @@ public class ArticleController {
     @GetMapping(value = "/index")
 
         public String index(Model model, @RequestParam(name = "page", defaultValue = "0")int page,
-                            @RequestParam(name = "kw", defaultValue = "") String kw
+                            @RequestParam(name = "kw", defaultValue = "") String kw,
+                            @RequestParam(name = "idCat", defaultValue = "0") Long idCat
                             )
         {
             PageRequest pageRequest = PageRequest.of(page, 5, Sort.by("id").ascending());
@@ -41,6 +42,8 @@ public class ArticleController {
 
             if(!kw.isEmpty()){
                 articles = articleRepository.findByDescriptionContains(kw, pageRequest);
+            } else if(idCat != 0){
+                articles = articleRepository.findByCategoryId(idCat, pageRequest);
             } else {
                 articles = articleRepository.findAll(pageRequest);
             }
