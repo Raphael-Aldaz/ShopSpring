@@ -19,9 +19,4 @@ public class Category implements Serializable {
     @Transient
     private Collection<Article> articles;
 
-
-
-
-
-
 }

@@ -10,7 +10,7 @@
     >
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary" th:object="${userConnected}">
     <div class="container-fluid">
         <a class="navbar-brand" th:href="@{/index}">Acceuil</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,15 +18,34 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="#">page1</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">page2</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/article}">Nouvel Article</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/order}">Panier</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">page3</a></li>
             </ul>
         </div>
+        <div th:if="${userConnected == false}" class="dropstart">
+            <button type="button" class="btn btn-primary dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                Login
+            </button>
+            <form  class="dropdown-menu p-4" th:action="@{/login}" method="post">
+                <div class="mb-3">
+                    <label for="exampleDropdownFormEmail2" class="form-label">Email address</label>
+                    <input name="username" th:value="${username}" type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleDropdownFormPassword2" class="form-label">Password</label>
+                    <input name="password" th:value="${password}" type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Sign in</button>
+            </form>
+        </div>
+        <a th:href="@{/logout}" class="btn btn-danger" th:unless="${userConnected != true}" th:text="LogOut"></a>
     </div>
 </nav>
 
     <section layout:fragment="content"></section>
-
+<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html  xmlns:th="http://www.thymeleaf.org"
        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-       layout:decorate="layout"
+       layout:decorate="~{layout}"
 >
 
 <head>
@@ -23,6 +23,7 @@
             <div class="panel-heading">Saisir le nouvel article</div>
             <div class="panel-body">
                 <form th:action="@{/save}" method="post" th:object="${article}">
+                    <input type="hidden" name="id" th:value="${article.id}" />
                     <div class="form-group">
                         <label class="control-label"> Description</label>
                         <input class="form-control" type="text" name="description" th:value="${article.description}">
@@ -33,15 +34,22 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label"> Price</label>
-                        <input class="form-control" type="number" step="0.01" name="price" th:value="${article.price}">
+                        <input class="form-control" type="number"  name="price" th:value="${article.price}">
                     </div>
                     <div class="form-group">
                         <label class="control-label"> Category</label>
-                        <select name="category.id" th:field="*{category}" required>
-                            <option th:each="category : ${listCategories}" th:value="${category.id}" th:text="${category.catName}"></option>
+                        <select name="category.id"  >
+                            <option th:each="category : ${listCategories}"
+                                    th:value="${category.id}"
+                                    th:text="${category.catName}"
+                                    th:selected="${article.category != null ? category.id == article.category.id : category.id == 0}"
+                            >
+
+                            </option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button th:if = "${article.id}"  type="submit" class="btn btn-primary">Update</button>
+                    <button th:unless="${article.id}">Save</button>
                 </form>
             </div>
 
