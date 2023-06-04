@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class UserController {
     @Autowired
@@ -18,12 +20,18 @@ public class UserController {
     public UserController() {
     }
 
+    @GetMapping(value = "/login")
+    public String index(){
+
+        return "redirect:/index";
+    }
     @PostMapping(value = "/login")
-    public String login(Model model ,String username, String password){
+    public String login(Model model , String username, String password, HttpSession session){
         User userConnected = userRepository.findByUsernameAndPassword(username, password);
         if(userConnected != null){
             customFunc.setUserConnected(true);
             model.addAttribute("userConnected", userConnected);
+            session.setAttribute("userId", userConnected.getId());
         } else {
             model.addAttribute("error", "Login ou mot de passe incorrect");
             return "redirect:/index";

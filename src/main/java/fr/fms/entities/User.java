@@ -18,10 +18,20 @@ public class User {
     private String loginUser;
     @NotNull
     private String passwordUser;
+    @NotNull
+    private Boolean active = true;
 
     @OneToMany(mappedBy = "user")
     @Transient
     List<Customer> customers;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns =  @JoinColumn(name = "role_id")
+    )
+    private List<Roles> roles;
 
     public User(String username, String password) {
         this.loginUser = username;

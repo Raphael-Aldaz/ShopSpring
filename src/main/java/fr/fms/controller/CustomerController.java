@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -24,8 +25,9 @@ public class CustomerController {
 
 
     @GetMapping  (value = "/customer")
-        public String submitCustomer(Model model) {
-
+        public String submitCustomer(Model model, HttpSession session) {
+        Long userId =(Long) session.getAttribute("userId");
+        System.out.println(userId + "userId");
         model.addAttribute("customer", new Customer());
             return "customer";
         }
@@ -36,6 +38,6 @@ public class CustomerController {
 
         if(bindingResult.hasErrors()) return "customer";
 
-            return "customer";
+        return "customer";
         }
 }
